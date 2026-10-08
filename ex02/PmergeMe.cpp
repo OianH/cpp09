@@ -29,11 +29,12 @@ bool PmergeMe::parseInput(int argc, char **argv)
         std::string token = argv[i];
         if (token.empty() || token.find_first_not_of("0123456789") != std::string::npos)
             return false;
-        int num = std::atoi(token.c_str());
-        if (num < 0)
+        char *end;
+        long num = std::strtol(token.c_str(), &end, 10);
+        if (*end != '\0' || num < 0 || num > 2147483647)
             return false;
-        _vec.push_back(num);
-        _deq.push_back(num);
+        _vec.push_back(static_cast<int>(num));
+        _deq.push_back(static_cast<int>(num));
     }
     return true;
 }
